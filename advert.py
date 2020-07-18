@@ -44,9 +44,9 @@ class AddManager:
     def fileHeader(self):
         return 'Company\tPosition\tLink\tLocation\tType\tPosted\n'
 
-    def saveToFile(self):
+    def saveToFile(self, filename):
         currentFileDir = os.path.abspath(os.path.dirname(__file__))
-        saveFile = os.path.join(currentFileDir, "pythonORGJobs.csv")
+        saveFile = os.path.join(currentFileDir, filename)
         f = open(saveFile, "w")
         f.write(self.fileHeader())
         f.close()
