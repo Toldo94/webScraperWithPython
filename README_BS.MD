@@ -73,3 +73,74 @@ Procedura je sljedeća:
 Ova pocedura se ponavlja sve dok se ne prođe kroz sve stranice.
 
 ## Lista sa oglasima
+
+Sada kad se došlo do liste sa pojedinim oglasima potrebno je pogledati kako su prezentovani ti oglasi,
+
+![Ad list](img/adList.png)
+
+Sada kada se vidi kako doći do liste svih oglasa bit će prezentovan kod kako je dohvatiti.
+
+## Uključivanje potrebnih modula
+
+Za dohvatanje sadržaja neke stranice korišten je `requests`modul a za jednostavnije manipulisanje `html` dokumentom korišten je `bs4` modul. 
+
+```python
+import requests
+from bs4 import BeautifulSoup
+```
+
+Za instalaciju ovih modula potrebno je izršiti komande:
+
+1. `pip install requests`
+2. `pip install bs4`
+
+Nako što su moduli instalirani sve je spremno da zaljni rad.
+
+```python
+site = 'https://www.python.org/jobs/'
+result = requests.get(site)
+```
+
+Prvo što je je urađeno jeste definisanje URL do stranice na kojoj se nalaze oglasi a korištenjem `requsts.get()`dohvata se sadržaj stranice.
+
+```python
+src = result.content
+soup = BeautifulSoup(src, 'html.parser')
+```
+
+Nakon što se dohvati tražena stranica potrebno je uzeti njen izvodni kod korištenje `src = result.content` i iskoristiti `src`za kreiranje novog `BeautifulSoup` objekta. On će biti dalje korišten za manipulacije sadžajem html dokumenta.
+
+```python
+mainBodySection = soup.find('section')
+# find orderd list containing all jobt advert
+jobOrderList = mainBodySection.find('ol')
+# find all list items (jobs) 
+jobItemsList = jobOrderList.find_all('li')
+```
+
+Kod iznad pokazuje kako doći do liste oglasa. Kao što je slikama i prezentovano. Prvo se traži `section` tag a nakon toga `ol` tag kao što se može vidjeti na slici iznad.
+Naša `ol` lista ima više elemenata potrebno je koristiti `find_all` metod. 
+
+Sada se ima lista sa svim oglasima i potrebno je iterirati kroz listu i izvući tražene podatke iz svakog oglasa.
+
+```python
+for jobItem in jobItemsList:
+  ...
+```
+
+Na slici ispod je prikazana organizacija unutar jednog oglasa.
+
+![List item](img/li_code.png)
+
+Kao što se može vidjeti na slici oglas se stastoji od jednog `h2` i tri `span` taga.
+Unutar ovih tagova se nalaze informacije koje su od interesa.
+
+Prvo se kreće sa `h2` tagom. Njegov sadržaj se može dobiti izvšavanjem sljedeće linije koda:
+
+```python
+# company listing
+companyListing = jobItem.find('h2')
+```
+
+Sadržaj `h2` taga je priazan na slici ispod:
+![](img/h2_content.png)

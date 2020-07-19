@@ -52,6 +52,7 @@ def main():
         mainBodySection = soup.find('section')
         # find orderd list containing all jobt advert
         jobOrderList = mainBodySection.find('ol')
+        # find all list items (jobs) 
         jobItemsList = jobOrderList.find_all('li')
         # go throught all list items
         for jobItem in jobItemsList:
