@@ -1,5 +1,6 @@
 import os
 
+
 class Add:
     def __init__(self, companyName, position, link, location, jobType, date):
         self.companyName = companyName
@@ -10,23 +11,23 @@ class Add:
         self.postedDate = date
 
     def __repr__(self):
-        return 'Company: {}, Position: {}, Link: {} ,Location: {}, Type: {}, Posted: {}'.format(
+        return 'Company: {}, Position: {}, Link: {} ,Location: {}, Type: {}, Posted: {}\n'.format(
             self.companyName,
             self.position,
             self.jobLink,
             self.location,
             self.jobType,
-            self.postedDate
+            self.postedDate,
         )
 
     def fileRepresentation(self):
-        return u'{}\t{}\t{}\t{}\t{}\t{}\n'.format(
+        return '{}\t{}\t{}\t{}\t{}\t{}\n'.format(
             self.companyName,
             self.position,
             self.jobLink,
             self.location,
             self.jobType,
-            self.postedDate
+            self.postedDate,
         )
 
 
@@ -47,10 +48,10 @@ class AddManager:
     def saveToFile(self, filename):
         currentFileDir = os.path.abspath(os.path.dirname(__file__))
         saveFile = os.path.join(currentFileDir, filename)
-        f = open(saveFile, "w")
+        f = open(saveFile, 'w')
         f.write(self.fileHeader())
         f.close()
-        with open(saveFile, mode='a+', encoding="utf-8") as my_file:
+        with open(saveFile, mode='a+', encoding='utf-8') as my_file:
             for add in self.addList:
                 my_file.write(add.fileRepresentation())
 
